@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Todo list</h1>
+    </div>
+    <div class="w-100"></div>
+    <div class="col">
+      <button class="btn btn-secondary me-2" (click)="openModal()" style="margin-left: 8px; width: 98.59px;">
+        Add task
+      </button>
+    </div>
+  </div>
+  <br />
+  <div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal-content" style="background-color: #f7dbb1">
+      <h3>New task</h3>
+
+      <form #form="ngForm" (ngSubmit)="addTask()" novalidate>
+
+        <input type="text" class="form-control mb-2" name="taskName" [(ngModel)]="currentItem.taskName"
+          placeholder="Task name" required #taskNameRef="ngModel" />
+        <div *ngIf="taskNameRef.invalid && taskNameRef.touched" class="text-danger mb-2">
+          Name task is reqired.
+        </div>
+
+        <textarea class="form-control mb-2" name="description" [(ngModel)]="currentItem.description"
+          placeholder="Description"></textarea>
+
+        <select class="form-select mb-2" name="status" [(ngModel)]="currentItem.status" required>
+          <option value="Planned">Planned</option>
+          <option value="Pending">Pending</option>
+        </select>
+
+        <input class="form-control mb-3" type="date" name="deadline" [(ngModel)]="currentItem.deadline"
+          [min]="todayDate" required />
+
+        <div class="text-end">
+          <button type="button" class="btn btn-danger me-2" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-success" [disabled]="form.invalid">Save</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="row gap-2">
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-secondary" (click)="sortTasksByName()">Name</button>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-secondary" (click)="sortTasksByDate()" style="width: 67.4px;">Date</button>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-secondary" (click)="sortTasksByStatus()">Status</button>
+    </div>
+  </div>
+  <ul class="list-group mx-auto">
+    @for (task of tasks; track $index) {
+    <li class="list-group-item d-flex color-red" style="background-color: #f7dbb1">
+      <div class="item" [ngClass]="{ 'completed': task.status === 'Completed' }">
+        @if(task.status === "Completed"){
+        <b class="text-primary-1"><del>{{ task.name }}</del></b>
+        } @else{
+        <b class="text-primary-1">{{ task.name }}</b>
+        }
+        <br />
+        @if (activeTaskIndex === $index) {
+        <p>{{ task?.description }}</p>
+        }
+        @if(task.status === "Planned"){
+        {{ task.date }} - <span class="badge bg-info text-white ">{{ task.status }}</span>
+        } @else if(task.status === "Pending"){
+        {{ task.date }} - <span class="badge bg-warning text-white ">{{ task.status }}</span>
+        }@else{
+        {{ task.date }} - <span class="badge bg-success text-white ">{{ task.status }}</span>
+        }
+        <br />
+        <button (click)="toggleDescription($index)" class="show-description-btn">
+          {{ activeTaskIndex === $index ? 'Hide description' : 'Show description' }}
+        </button>
+      </div>
+      <div class="input">
+        <input type="checkbox" class="form-check-input" [checked]="task.status === 'Completed'"
+          (change)="toggleCompleted(task)">
+      </div>
+    </li>
+    }
+  </ul>
+</div>
