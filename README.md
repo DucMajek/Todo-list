@@ -1,9 +1,9 @@
 # Todo-list
 
-![image](https://github.com/user-attachments/assets/467c75f8-dcf5-4ff1-af18-f253cee43af2)
+![image](https://github.com/user-attachments/assets/aa03849f-c18f-4d45-94c4-a2e44c9239b4)
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ba6c0daa-134b-4d91-91dc-1b8290fbf378" alt="responsive"">
+  <img src="https://github.com/user-attachments/assets/6b4019c9-6f67-4034-b684-cf8e6fed30df" alt="responsive"">
 </p>
 
 ## Jak uruchomić
